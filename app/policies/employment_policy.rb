@@ -27,8 +27,6 @@ class EmploymentPolicy
    @current_user.organisation?
   end
 
-  def get_list?
-    @current_user.user?
-  end
+
 
 end

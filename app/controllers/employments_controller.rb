@@ -11,7 +11,7 @@ class EmploymentsController < ApplicationController
 
   def get_list
     @employments = current_user.employments
-    authorize @employments.first
+    authorize current_user
   end
 
 

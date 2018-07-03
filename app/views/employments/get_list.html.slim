@@ -28,7 +28,6 @@ h5 Listing all Application
           td = link_to employment.resume.original_filename, employment.resume.url
           td = link_to 'Show', opening_employment_path(employment.opening,employment)
           td = link_to 'Edit', edit_opening_employment_path(employment.opening,employment)
-          td = link_to 'Destroy', opening_employments_path(employment.opening,employment), data: { confirm: 'Are you sure?' }, method: :delete
           -if current_user.organisation?
             - unless employment.interview
               td = link_to 'Schedule interview', schedule_path(employment.id)
