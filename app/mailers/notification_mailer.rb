@@ -9,7 +9,7 @@ class NotificationMailer < ApplicationMailer
   def job_application_notification_to_organisation(user,employment)
     @user = user
     @employment =employment
-    mail(to: @user.email, subject: 'Soemone applied for your job opening')
+    mail(to: @user.email, subject: 'Someone applied for your job opening')
   end
 
   def interview_schedule_notification(user,interview)
