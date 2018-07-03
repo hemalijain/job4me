@@ -1,0 +1,9 @@
+#new_interview.modal.fade
+  .modal-dialog
+    .modal-content
+      .modal-header
+        button.close aria-hidden="true" data-dismiss="modal" type="button"  ×
+        h4.modal-title Schedule Interview for : 
+        = @interview.try(:employment).try(:name)
+      .modal-body
+        = render 'form', interview: @interview

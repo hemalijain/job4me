@@ -1,0 +1,40 @@
+h5 Listing all Application for a Job - #{@opening.title}
+
+.table-responsive
+  table.table-condensed.table
+    thead
+      tr
+        th Name
+        th Current company
+        th Ctc
+        th Ectc
+        th Total experience
+        th Relevent experience
+        th Resume
+        th
+        th
+        th
+        th
+
+    tbody
+      - @employments.each do |employment|
+        tr
+          td = employment.name
+          td = employment.current_company
+          td = employment.ctc
+          td = employment.ectc
+          td = employment.total_experience
+          td = employment.relevent_experience
+          td = link_to employment.resume.original_filename, employment.resume.url
+          td = link_to 'Show', opening_employment_path(employment.opening,employment)
+          td = link_to 'Edit', edit_opening_employment_path(employment.opening,employment)
+          td = link_to 'Destroy', opening_employments_path(employment.opening,employment), data: { confirm: 'Are you sure?' }, method: :delete
+          -if current_user.organisation?
+            - unless employment.interview
+              td = link_to 'Schedule interview', schedule_path(employment.id)
+            -else
+              td = link_to 'ReSchedule interview', schedule_path(employment.id)
+
+br
+-if current_user.user?
+  = link_to 'New Employment', new_opening_employment_path

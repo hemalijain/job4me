@@ -1,0 +1,33 @@
+h1 Listing interviews
+
+table
+  thead
+    tr
+      th Title
+      th Date range
+      th Start
+      th End
+      th Status
+      th Color
+      th Employment
+      th
+      th
+      th
+
+  tbody
+    - @interviews.each do |interview|
+      tr
+        td = interview.title
+        td = interview.date_range
+        td = interview.start
+        td = interview.end
+        td = interview.status
+        td = interview.color
+        td = interview.employment
+        td = link_to 'Show', interview
+        td = link_to 'Edit', edit_interview_path(interview)
+        td = link_to 'Destroy', interview, data: { confirm: 'Are you sure?' }, method: :delete
+
+br
+
+= link_to 'New Interview', new_interview_path

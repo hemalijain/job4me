@@ -1,0 +1,9 @@
+#edit_interview.modal.fade
+  .modal-dialog
+    .modal-content
+      .modal-header
+        button.close aria-hidden="true" data-dismiss="modal" type="button"  ×
+        h4.modal-title Re-Schedule Interview for : 
+        = @interview.employment.name
+      .modal-body
+        = render 'form', interview: @interview

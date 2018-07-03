@@ -1,0 +1,35 @@
+
+
+= form_for([@opening, @employment]) do |f|
+  - if @employment.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@employment.errors.count, "error")} prohibited this employment from being saved:"
+      ul
+        - @employment.errors.full_messages.each do |message|
+          li = message
+  =f.hidden_field :opening_id 
+  =f.hidden_field :user_id, :value=>current_user.id
+  .field
+    = f.label :name
+    = f.text_field :name, :class=>"form-control"
+  .field
+    = f.label :current_company
+    = f.text_field :current_company, :class=>"form-control"
+  .field
+    = f.label :ctc
+    = f.text_field :ctc, :class=>"form-control"
+  .field
+    = f.label :ectc
+    = f.text_field :ectc, :class=>"form-control"
+  .field
+    = f.label :total_experience
+    = f.text_field :total_experience, :class=>"form-control"
+  .field
+    = f.label :relevent_experience
+    = f.text_field :relevent_experience, :class=>"form-control"
+
+  .field
+    = f.label :Resume
+    = f.file_field :resume  , :class=>"form-control form-control-file"
+  br  
+  .actions = f.submit 'Submit', :class=>"btn btn-default"

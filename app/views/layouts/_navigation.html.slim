@@ -1,0 +1,28 @@
+
+
+
+nav.navbar.navbar-inverse
+  .container-fluid
+    
+    .navbar-header
+      a.navbar-brand href="#"  JOB Search
+    ul.nav.navbar-nav
+      - if user_signed_in? && current_user.organisation?
+        li= link_to 'My Openings', openings_path
+        li= link_to 'Interviews', calender_path
+
+      - if user_signed_in? && current_user.user?
+        li= link_to 'My Applications', openings_path
+        li= link_to 'My Interview Schedule', calender_path
+
+    ul.nav.navbar-nav.navbar-right
+      - if user_signed_in?
+        p.heading-text welcome #{current_user.email}
+        p.heading-text Role: #{current_user.role}
+        li= link_to 'Edit account', edit_user_registration_path, :class=>"btn"
+        li= link_to 'Sign out', destroy_user_session_path, :method=>'delete'
+      -else   
+        li= link_to 'Sign in', new_user_session_path
+        li= link_to 'Sign up', new_user_registration_path
+
+      

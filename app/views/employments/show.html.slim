@@ -1,0 +1,27 @@
+p#notice = notice
+
+p
+  strong Name:
+  = @employment.name
+p
+  strong Current company:
+  = @employment.current_company
+p
+  strong Ctc:
+  = @employment.ctc
+p
+  strong Ectc:
+  = @employment.ectc
+p
+  strong Total experience:
+  = @employment.total_experience
+p
+  strong Relevent experience:
+  = @employment.relevent_experience
+p
+  strong Resume:
+  = @employment.resume.url
+
+=> link_to 'Edit', edit_opening_employment_path(@employment.opening,@employment)
+'|
+=< link_to 'Back', opening_employments_path(@employment.opening)

@@ -1,0 +1,45 @@
+
+
+h1 Here is all the Openings
+.table-responsive
+  table.table-condensed.table
+    thead
+      tr
+        th Title
+        th Description
+        th Location
+        th Role
+        th Organisation
+       
+        th
+        - if current_user
+          th
+          th
+          th
+
+    tbody
+      - @openings.each do |opening|
+        tr
+          td = opening.title
+          td = opening.description
+          td = opening.location
+          td = opening.role
+          td = opening.user.email
+
+
+          td = link_to 'Show', opening
+          - if current_user && current_user.organisation?
+            td = link_to 'Edit', edit_opening_path(opening)
+            td = link_to 'Destroy', opening, data: { confirm: 'Are you sure?' }, method: :delete
+          -if current_user &&  current_user.organisation?
+            td = link_to 'View All Applications', opening_employments_path(opening)
+          -elsif current_user
+            -if opening.employments.select{|c| c.user.id == current_user.id}.blank?
+              td = link_to 'Apply', new_opening_employment_path(opening)
+            -else  
+              
+              td = "Already Applied"
+
+br
+- if current_user && current_user.organisation?
+  = link_to 'New Opening', new_opening_path

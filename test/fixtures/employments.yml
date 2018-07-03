@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: 
+  current_company: MyString
+  ctc: MyString
+  string,: MyString
+  ectc: 
+  total_experience: 
+  relevent_experience: MyString
+
+two:
+  name: 
+  current_company: MyString
+  ctc: MyString
+  string,: MyString
+  ectc: 
+  total_experience: 
+  relevent_experience: MyString

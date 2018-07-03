@@ -1,0 +1,66 @@
+javascript:
+	var initialize_calendar;
+	initialize_calendar = function() {
+	  $('#calendar').each(function(){
+	    var calendar = $(this);
+	    calendar.fullCalendar({
+	      header: {
+	        left: 'prev,next today',
+	        center: 'title',
+	        right: 'month,agendaWeek,agendaDay'
+	      },
+	      selectable: true,
+	      selectHelper: true,
+	      editable: true,
+	      eventLimit: true,
+	      eventSources: [
+	        '/interviews.json'
+	      ],
+
+	      select: function(start, end) {
+	        employment=""
+	        if(window.location.href.split("employments/")[1] != null){
+	          employment= window.location.href.split("employments/")[1].split("/")[0]
+	        }
+	        $.getScript('/interviews/new?employment='+ employment, function() {
+	          $('#event_date_range').val(moment(start).format("MM/DD/YYYY HH:mm") + ' - ' + moment(end).format("MM/DD/YYYY HH:mm"))
+	          date_range_picker();
+	          $('.start_hidden').val(moment(start).format('YYYY-MM-DD HH:mm'));
+	          $('.end_hidden').val(moment(end).format('YYYY-MM-DD HH:mm'));
+
+	          $('#interview_start').val(moment(start).format('YYYY-MM-DD HH:mm'));
+	          $('#interview_end').val(moment(end).format('YYYY-MM-DD HH:mm'));
+	        });
+
+	        calendar.fullCalendar('unselect');
+	      },
+
+	      eventDrop: function(interview, delta, revertFunc) {
+	       
+	        event_data = { 
+	          interview: {
+	            id: interview.id,
+	            start: interview.start.format(),
+	            end: interview.end.format(),
+	            enrollment_id: interview.enrollment_id
+	          }
+	        };
+	        $.ajax({
+	            url: interview.update_url + "&employment_id="+ interview.enrollment_id,
+	            data: event_data,
+	            type: 'PATCH'
+	        });
+	      },
+	      
+	      eventClick: function(interview, jsEvent, view) {
+	        $.getScript(interview.edit_url, function() {
+	          $('#event_date_range').val(moment(interview.start).format("MM/DD/YYYY HH:mm") + ' - ' + moment(interview.end).format("MM/DD/YYYY HH:mm"))
+	          date_range_picker();
+	          $('.start_hidden').val(moment(event.start).format('YYYY-MM-DD HH:mm'));
+	          $('.end_hidden').val(moment(event.end).format('YYYY-MM-DD HH:mm'));
+	        });
+	      }
+	    });
+	  })
+	};
+	$(document).on('turbolinks:load', initialize_calendar);

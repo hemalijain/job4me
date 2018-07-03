@@ -1,0 +1,21 @@
+p#notice = notice
+
+p
+  strong Title:
+  = @opening.title
+p
+  strong Description:
+  = @opening.description
+p
+  strong Location:
+  = @opening.location
+p
+  strong Role:
+  = @opening.role
+p
+  strong Organisation:
+  = @opening.user.email
+
+=> link_to 'Edit', edit_opening_path(@opening)
+'|
+=< link_to 'Back', openings_path

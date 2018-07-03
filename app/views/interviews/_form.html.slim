@@ -1,0 +1,30 @@
+= form_for @interview , remote: true do |f|
+  - if @interview.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@interview.errors.count, "error")} prohibited this interview from being saved:"
+      ul
+        - @interview.errors.full_messages.each do |message|
+          li = message
+  =f.hidden_field :employment_id, :value=>@interview.try(:employment).try(:id)
+  .field
+    = f.label :title
+    = f.text_field :title,:class=>"form-control"
+
+  .field
+    = f.label :start
+    = f.text_field :start, :readonly=>"readonly",:class=>"form-control"
+  .field
+    = f.label :end
+    = f.text_field :end, :readonly=>"readonly",:class=>"form-control"
+  
+  .field
+    = f.label :status
+    = f.select "status", options_for_select([ "Scheduled", "Selected","Rejected","Cancelled" ]),{}, :class=>"form-control"
+  .field
+    = f.label :color
+    = f.select "status", options_for_select([ "Black", "Red","Green" ]),{}, :class=>"form-control"
+  .field
+    = f.label :Employment
+    = f.select "employment_id", @employments_id.map{|c| [c.name, c.id]},{}, :class=>"form-control"  
+  br
+  .actions = f.submit "Submit", :class=>"btn btn-default"
