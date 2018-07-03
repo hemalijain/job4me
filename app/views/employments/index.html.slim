@@ -11,6 +11,7 @@ h5 Listing all Application for a Job - #{@opening.title}
         th Total experience
         th Relevent experience
         th Resume
+        th Company
         th
         th
         th
@@ -26,6 +27,7 @@ h5 Listing all Application for a Job - #{@opening.title}
           td = employment.total_experience
           td = employment.relevent_experience
           td = link_to employment.resume.original_filename, employment.resume.url
+          td = link_to employment.opening.title
           td = link_to 'Show', opening_employment_path(employment.opening,employment)
           -if current_user.organisation?
             - unless employment.interview

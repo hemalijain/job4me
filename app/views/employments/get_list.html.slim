@@ -11,6 +11,7 @@ h5 Listing all Application
         th Total experience
         th Relevent experience
         th Resume
+        th Company
         th
         th
         th
@@ -26,6 +27,7 @@ h5 Listing all Application
           td = employment.total_experience
           td = employment.relevent_experience
           td = link_to employment.resume.original_filename, employment.resume.url
+          td = employment.opening.title
           td = link_to 'Show', opening_employment_path(employment.opening,employment)
           td = link_to 'Edit', edit_opening_employment_path(employment.opening,employment)
           -if current_user.organisation?

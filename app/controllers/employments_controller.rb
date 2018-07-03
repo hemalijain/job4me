@@ -39,16 +39,26 @@ class EmploymentsController < ApplicationController
   def create
     @employment = Employment.new(employment_params)
     authorize @employment
+
+    existing_application = Employment.where(:opening_id=>params['employment'][:opening_id], :user_id=> current_user.id)
     respond_to do |format|
-      if @employment.save!
-        NotificationMailer.job_application_confirmdation_to_user(@employment.user).deliver
-        NotificationMailer.job_application_notification_to_organisation(@employment.opening.user, @employment).deliver
-        format.html { redirect_to openings_path, notice: 'Employment was successfully created.' }
-        format.json { render :show, status: :created, location: @employment }
-      else
-        format.html { redirect_to openings_path }
+      if  existing_application.count == 0
+        if @employment.save
+          NotificationMailer.job_application_confirmdation_to_user(@employment.user).deliver
+          NotificationMailer.job_application_notification_to_organisation(@employment.opening.user, @employment).deliver
+          format.html { redirect_to openings_path, notice: 'Employment was successfully created.' }
+          format.json { render :show, status: :created, location: @employment }     
+        else
+          format.html { render :action=>'new', :params=>{:opening=> @employment.opening }}
+          format.json { render json: @employment.errors, status: :unprocessable_entity }
+        end
+
+      elsif existing_application.count > 0
+        @employment.errors.add(:user_id, :not_unique, message: "You have already applied for this job")
+        format.html { render :action=>'new', :params=>{:opening=> @employment.opening } }
         format.json { render json: @employment.errors, status: :unprocessable_entity }
-      end
+        
+    end
     end
   end
 

@@ -21,6 +21,10 @@ p
 p
   strong Resume:
   = @employment.resume.url
+p
+  strong Company:
+  = @employment.opening.title 
+
 
 => link_to 'Edit', edit_opening_employment_path(@employment.opening,@employment)
 '|
