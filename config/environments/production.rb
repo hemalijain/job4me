@@ -90,7 +90,7 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   ActionMailer::Base.smtp_settings = {
-  :user_name => ENV['SENDGRID_USERNAME']],
+  :user_name => ENV['SENDGRID_USERNAME'],
   :password => ENV['SENDGRID_PASSWORD'],
   :domain => 'jobportal-demo@herokuapp.com',
   :address => 'smtp.sendgrid.net',
