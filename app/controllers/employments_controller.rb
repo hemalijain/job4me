@@ -1,5 +1,6 @@
 class EmploymentsController < ApplicationController
   before_action :set_employment, only: [:show, :edit, :update, :destroy]
+  after_action :verify_authorized, except: [:show,:index]
 
   # GET /employments
   # GET /employments.json
@@ -8,6 +9,12 @@ class EmploymentsController < ApplicationController
     @employments = Opening.find(params[:opening_id]).employments
   end
 
+  def get_list
+    @employments = current_user.employments
+    authorize @employments.first
+  end
+
+
   # GET /employments/1
   # GET /employments/1.json
   def show
@@ -15,20 +22,23 @@ class EmploymentsController < ApplicationController
 
   # GET /employments/new
   def new
+
     @opening = Opening.find(params[:opening_id])
     @employment = Employment.new(:opening_id =>@opening.id)
+    authorize @employment
   end
 
   # GET /employments/1/edit
   def edit
     @opening = Opening.find(params[:opening_id])
+    authorize @employment
   end
 
   # POST /employments
   # POST /employments.json
   def create
     @employment = Employment.new(employment_params)
-
+    authorize @employment
     respond_to do |format|
       if @employment.save!
         NotificationMailer.job_application_confirmdation_to_user(@employment.user).deliver
@@ -45,7 +55,9 @@ class EmploymentsController < ApplicationController
   # PATCH/PUT /employments/1
   # PATCH/PUT /employments/1.json
   def update
+    authorize @employment
     respond_to do |format|
+
       if @employment.update(employment_params)
         format.html { redirect_to openings_path, notice: 'Employment was successfully updated.' }
         format.json { render :show, status: :ok, location: @employment }
@@ -59,6 +71,7 @@ class EmploymentsController < ApplicationController
   # DELETE /employments/1
   # DELETE /employments/1.json
   def destroy
+    authorize @employment
     @employment.destroy
     respond_to do |format|
       format.html { redirect_to employments_url, notice: 'Employment was successfully destroyed.' }
@@ -68,6 +81,7 @@ class EmploymentsController < ApplicationController
 
   def schedule_interview
     @employment = Employment.find(params[:id])
+    authorize @employment
   end
 
   private

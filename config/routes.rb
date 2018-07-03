@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   	resources :employments 
   	
   end
+  get 'employments', to: 'employments#get_list'
   root to: 'openings#index'
   get 'calender', to: 'visitors#index'
   devise_for :users, :controllers => { registrations: 'registrations' }

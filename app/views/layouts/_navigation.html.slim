@@ -12,7 +12,8 @@ nav.navbar.navbar-inverse
         li= link_to 'Interviews', calender_path
 
       - if user_signed_in? && current_user.user?
-        li= link_to 'My Applications', openings_path
+        li= link_to 'All openings', openings_path
+        li= link_to 'My Applications', employments_path
         li= link_to 'My Interview Schedule', calender_path
 
     ul.nav.navbar-nav.navbar-right
